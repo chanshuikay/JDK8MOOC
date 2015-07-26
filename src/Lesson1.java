@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -48,13 +49,19 @@ public class Lesson1 {
     List<String> list = Arrays.asList("alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
 
     /* YOUR CODE HERE */
+    StringBuilder builder = new StringBuilder();
+    list.forEach(s -> builder.append(s.charAt(0)));
+    String firstLetterOfEach = builder.toString();
+
+    // trying some other ways
+
     // String firstLetterOfEach = list.stream().collect(StringBuilder::new, (acc, s) -> acc.append(s.charAt(0)), StringBuilder::append).toString();
 
     // I think this one is more readable
-    String firstLetterOfEach = list.stream()
-      .map(Lesson1::firstChar)
+//    String firstLetterOfEach = list.stream()
+//      .map(Lesson1::firstChar)
 //    .map(s -> s.substring(0, 1))
-      .collect(Collectors.joining());
+//      .collect(Collectors.joining());
 
     System.out.println(firstLetterOfEach);
   }
@@ -105,11 +112,15 @@ public class Lesson1 {
     map.put("a", 1);
 
     /* YOUR CODE HERE */
-    String mapAsString = map.entrySet().stream()
-      .map(e -> e.getKey() + "=" + e.getValue().toString())
-      .collect(Collectors.joining(", "));
+//    String mapAsString = map.entrySet().stream()
+//      .map(e -> e.getKey() + "=" + e.getValue().toString())
+//      .collect(Collectors.joining(", "));
 
-    System.out.println(mapAsString);
+    StringJoiner joiner = new StringJoiner(", ", "{", "}");
+
+    map.forEach( (key, value) -> joiner.add(key + "=" + value) );
+
+    System.out.println(joiner);
   }
 
   /**
